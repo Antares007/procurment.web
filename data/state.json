@@ -1,0 +1,14 @@
+{
+  "tender":{},
+  "cart":{
+    "items":[
+      {"quantity":2,"price":"1.00","discount":0,"amount":"2.00","priceListItem":{"barCode":"0101","name":"item 1","price":"1.00","discount":0}},
+      {"quantity":1,"price":"2.00","discount":0,"amount":"2.00","priceListItem":{"barCode":"0102","name":"item 2","price":"2.00","discount":0}},
+      {"quantity":2,"price":"3.00","discount":0,"amount":"6.00","priceListItem":{"barCode":"0103","name":"item 3","price":"3.00","discount":0}}
+    ],
+    "totalAmount":"10.00",
+    "payments":{"cash":"0.00","creditCard":"0.00"},
+    "totalPayed":"0.00",
+    "change":"-10.00"
+  }
+}
