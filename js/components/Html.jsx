@@ -1,7 +1,6 @@
 'use strict';
 var React = require('react');
 
-// Handle the HTML rendering on the server
 var Html = React.createClass({
   render: function() {
     return (
@@ -28,14 +27,15 @@ var Html = React.createClass({
           <meta name="theme-color" content="#ffffff"/>
 
           <link rel="stylesheet" href="/css/main.css" />
+        </head>
+        <body>
+          <div id="app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
           <script dangerouslySetInnerHTML={{__html: this.props.state}}></script>
           <script src="/js/bundle.js"></script>
-        </head>
-        <body dangerouslySetInnerHTML={{__html: this.props.markup}}></body>
+        </body>
       </html>
     );
   }
 });
 
 module.exports = Html;
-

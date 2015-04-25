@@ -8,16 +8,25 @@ var express      = require('express');
 var path         = require('path');
 var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
+var session      = require('express-session');
 var bodyParser   = require('body-parser');
 var cachebuster  = require('./cachebuster');
 var serverRender = require('./server.jsx');
+var authRoutes   = require('./authorization/routes.js');
 
 var app = express();
 
 app.use(logger(app.get('env') === 'production' ? 'combined' : 'dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser('keyboard cat'));
+app.use(session({
+  secret: 'keyboard cat',
+  name: 'tender.sid',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(authRoutes());
 
 // static files with cache buster
 var publicPath = path.join(__dirname, 'public');
@@ -35,9 +44,6 @@ if (app.get('env') === 'development') {
   });
 }
 
-app.get('/a', function(req, res){
-  res.send('ok');
-});
 // use react routes
 app.use('/', serverRender);
 
@@ -53,4 +59,3 @@ app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), function () {
   debug('Express ' + app.get('env') + ' server listening on port ' + this.address().port);
 });
-

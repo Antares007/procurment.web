@@ -17,27 +17,36 @@ var appState = require('./data/appState.js');
 
 module.exports = function (req, res, next) {
 
-  if(req.method === 'POST') {
-    appState = patch(appState, req.body);
-    return res.sendStatus(200);
-  }
+  console.log('isAuthenticated: %s',req.isAuthenticated())
+  console.log(req.user);
+  console.log(req.url);
+  // if(req.method === 'POST') {
+  //   appState = patch(appState, req.body);
+  //   return res.sendStatus(200);
+  // }
 
+  if(req.isAuthenticated()){
+
+  } else {
+    if(req.url !== '/login')
+    return res.redirect('/login');
+  };
   Router.run(routes, req.url, function (Handler, state) {
-      try {
+    try {
 
-        var exposed = 'window.appState=' + serialize(appState.toJS()) + ';';
+      var exposed = 'window.appState=' + serialize(appState.toJS()) + ';';
 
-        var params = state.params;
-        var title  = DocumentTitle.rewind();
-        var markup = React.renderToString(<Handler params={params} query={state.query} cursor={Cursor.from(appState, () => null)}/>);
-        var html   = React.renderToStaticMarkup(<Html title={title} markup={markup} state={exposed}/>);
+      var params = state.params;
+      var title  = DocumentTitle.rewind();
+      var markup = React.renderToString(<Handler params={params} query={state.query} cursor={Cursor.from(appState, () => null)}/>);
+      var html   = React.renderToStaticMarkup(<Html title={title} markup={markup} state={exposed}/>);
 
-        // TODO: send 404 status code
-        // (see: https://github.com/gpbl/isomorphic-react-template/issues/3)
+      // TODO: send 404 status code
+      // (see: https://github.com/gpbl/isomorphic-react-template/issues/3)
 
-        res.send('<!DOCTYPE html>' + html);
-      } catch(ex) {
-        res.send(ex.message);
-      }
+      res.send('<!DOCTYPE html>' + html);
+    } catch(ex) {
+      res.send(ex.message);
+    }
   });
 };

@@ -11,18 +11,12 @@ var flex = {
 };
 
 var App = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.func
-  },
+  // contextTypes: {
+  //   router: React.PropTypes.func
+  // },
   render: function () {
-
     return (
       <div style={flex}>
-        <header>
-          <ul style={{display: 'flex', justifyContent: 'space-around'}}>
-            <li>ok</li>
-          </ul>
-        </header>
         <RouteHandler {...this.props}/>
       </div>
     );

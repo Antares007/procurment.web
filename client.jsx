@@ -24,14 +24,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
       var cursor = Cursor.from(currentState, function(newAppState, oldAppState, changePath) {
         var patch = diff(oldAppState, newAppState);
 
-        request({method:'POST', url:'/api/patchstate', json: patch}, function() {
+        request({ method: 'POST', url: '/api/patchstate', json: patch }, function() {
           window.appState = newAppState;
           render(newAppState);
         })
 
       });
 
-      React.render(<Handler params={state.params} query={state.query} cursor={cursor} />, document.body);
+      React.render(<Handler params={state.params} query={state.query} cursor={cursor} />, document.getElementById('app'));
     }
 
     render(window.appState);
